@@ -1,8 +1,8 @@
 package com.moonfly.nbpdemo.domain.repository
 
-class CurrenciesRepository(private val gamesDataSource: CurrenciesDataSource) {
+class CurrenciesRepository(private val currenciesDataSource: CurrenciesDataSource) {
 
-    suspend fun getLatestCurrenciesRatesCurrencies() = gamesDataSource.getLatestCurrenciesRates()
+    suspend fun getLatestCurrenciesRatesCurrencies() = currenciesDataSource.getLatestCurrenciesRates()
 
-    suspend fun getCurrencyDetails(code: String) = gamesDataSource.getCurrencyDetails(code)
+    suspend fun getCurrencyDetails(code: String) = currenciesDataSource.getCurrencyDetails(code)
 }
