@@ -22,5 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "NBPDemo"
 include(":app")
 include(":domain")
-include(":data")
 include(":presentation")
+include(":data")
