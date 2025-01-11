@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -43,6 +44,7 @@ fun LoadingBar() {
             modifier = Modifier
                 .wrapContentWidth()
                 .wrapContentHeight()
+                .testTag(LoadingBarTag)
         )
     }
 }

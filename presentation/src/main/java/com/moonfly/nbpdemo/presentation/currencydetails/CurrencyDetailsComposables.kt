@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.moonfly.nbpdemo.presentation.base.ErrorMessage
@@ -23,9 +22,18 @@ import com.moonfly.nbpdemo.presentation.base.LoadingBar
 import com.moonfly.nbpdemo.presentation.base.theme.mediumSpace
 
 @Composable
-fun CurrencyDetailsMainView() {
-    val viewModel: CurrencyDetailsViewModel = hiltViewModel()
+fun CurrencyDetailsMainView(
+    viewModel: CurrencyDetailsViewModel = hiltViewModel()
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    CurrencyDetailsContent(uiState, viewModel::onRefreshClicked)
+}
+
+@Composable
+fun CurrencyDetailsContent(
+    uiState: CurrencyDetailsState,
+    onRefreshClick: () -> Unit,
+) {
     Box {
         when {
             !uiState.isError && !uiState.isLoading ->
@@ -40,7 +48,7 @@ fun CurrencyDetailsMainView() {
                     HistoricalRates(rates = uiState.detailedCurrency.rates)
                 }
 
-            uiState.isError -> ErrorMessage(viewModel::onRefreshClicked)
+            uiState.isError -> ErrorMessage(onRefreshClick)
             else -> LoadingBar()
         }
 

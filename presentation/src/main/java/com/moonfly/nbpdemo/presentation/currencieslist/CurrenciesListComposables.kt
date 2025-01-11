@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.moonfly.nbpdemo.presentation.base.ErrorMessage
@@ -24,30 +23,37 @@ import com.moonfly.nbpdemo.presentation.base.theme.mediumSpace
 
 @Composable
 fun CurrenciesListMainView(
+    viewModel: CurrenciesListViewModel = hiltViewModel(),
     onNavigateToDetails: (code: String) -> Unit,
 ) {
-    val viewModel: CurrenciesListViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
     LaunchedEffect(Unit) {
         viewModel.navigateToDetailsAction.collect {
             onNavigateToDetails(it)
         }
     }
+    CurrencyListContent(uiState, viewModel::onCurrencyClicked, viewModel::onRefreshClicked)
+}
 
+@Composable
+fun CurrencyListContent(
+    uiState: CurrenciesListState,
+    onCurrencyClick: (code: String) -> Unit,
+    onRefreshClick: () -> Unit,
+) {
     Box {
         when {
             !uiState.isError && !uiState.isLoading -> {
                 LazyColumn {
                     items(uiState.currencies) {
                         ListItem(it.currency.name, it.currency.code, it.rate.rate) { code ->
-                            viewModel.onCurrencyClicked(code)
+                            onCurrencyClick(code)
                         }
                     }
                 }
             }
 
-            uiState.isError -> ErrorMessage(viewModel::onRefreshClicked)
+            uiState.isError -> ErrorMessage(onRefreshClick)
 
             else -> LoadingBar()
         }
