@@ -1,5 +1,6 @@
 package com.moonfly.nbpdemo.presentation.currencieslist
 
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.moonfly.nbpdemo.domain.model.LatestCurrencyRate
@@ -59,6 +60,7 @@ class CurrenciesListViewModel @Inject constructor(
     }
 }
 
+@Immutable
 data class CurrenciesListState(
     val isLoading: Boolean = true,
     val isError: Boolean = false,

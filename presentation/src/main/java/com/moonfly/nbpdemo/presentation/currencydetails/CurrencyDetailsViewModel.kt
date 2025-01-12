@@ -1,5 +1,6 @@
 package com.moonfly.nbpdemo.presentation.currencydetails
 
+import androidx.compose.runtime.Immutable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,7 +17,6 @@ import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
-import kotlin.math.absoluteValue
 
 @HiltViewModel
 class CurrencyDetailsViewModel @Inject constructor(
@@ -84,6 +84,7 @@ class CurrencyDetailsViewModel @Inject constructor(
 
 }
 
+@Immutable
 data class CurrencyDetailsState(
     val isLoading: Boolean = true,
     val isError: Boolean = false,
